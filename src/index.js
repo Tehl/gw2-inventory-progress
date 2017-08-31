@@ -5,5 +5,5 @@ import apiKey from "./apiKey";
 let api = new Gw2Api(apiKey);
 
 initialize(api).then(res => {
-  console.log(res.inventory);
+  console.log(res);
 });

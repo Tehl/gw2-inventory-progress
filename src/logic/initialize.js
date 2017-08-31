@@ -1,28 +1,43 @@
 import { flatten } from "../utility/array";
+import { mapKeys } from "../utility/object";
 import { buildInventoryData } from "./inventory";
+import { buildWalletData } from "./wallet";
+import { calculateProgress } from "./progress";
+import wishlist from "../data/wishlist";
 
 function initialize(dataService) {
-  return buildInventoryData(dataService)
+  return Promise.all([
+    buildInventoryData(dataService),
+    buildWalletData(dataService)
+  ])
     .then(res => {
-      return Promise.all([dataService.getItems(res.itemIds), res.inventory]);
+      return Promise.all([
+        ...res,
+        dataService.getItems(res[0].itemIds),
+        dataService.getCurrencies(res[1].currencyIds)
+      ]);
     })
     .then(res => {
-      let items = res[0];
-      let inventory = res[1];
+      let inventory = mapKeys(res[0].inventory, (value, key) => ({
+        id: key,
+        owned: value.count,
+        allocated: 0
+      }));
 
-      items.forEach(item => {
-        let inventoryItem = inventory[item.id];
-        if (!inventoryItem) {
-          return;
-        }
+      let wallet = mapKeys(res[1].wallet, (value, key) => ({
+        id: key,
+        owned: value.count,
+        allocated: 0
+      }));
 
-        inventoryItem.name = item.name;
-      });
-
-      return {
-        items,
-        inventory
+      let resources = {
+        inventory,
+        wallet
       };
+
+      let progress = calculateProgress(wishlist, resources);
+
+      return progress;
     });
 }
 

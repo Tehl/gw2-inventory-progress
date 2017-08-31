@@ -50,6 +50,10 @@ Gw2Api.prototype.getPrices = function getPrices(ids) {
   return this._distributedFetch(ids, partial => "/commerce/prices?ids=" + partial.join(","), false);
 };
 
+Gw2Api.prototype.getCurrencies = function getCurrencies(ids) {
+  return this._distributedFetch(ids, partial => "/currencies?ids=" + partial.join(","), false);
+};
+
 Gw2Api.prototype.getCharacters = function getCharacters() {
   return this._apiFetch("/characters", true);
 };
@@ -67,6 +71,10 @@ Gw2Api.prototype.getBank = function getBank() {
 
 Gw2Api.prototype.getMaterialStorage = function getMaterialStorage() {
   return this._apiFetch("/account/materials", true);
+};
+
+Gw2Api.prototype.getWallet = function getWallet() {
+  return this._apiFetch("/account/wallet", true);
 };
 
 export default Gw2Api;
