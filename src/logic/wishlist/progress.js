@@ -1,3 +1,5 @@
+import { mapKeys } from "../../utility/object";
+
 function processResourceItem(resourceItem, resourceCollection, key) {
   let result = {
     [key]: resourceItem[key],
@@ -73,7 +75,17 @@ function processListItem(listItem, availableResources) {
 }
 
 function calculateProgress(wishlist, availableResources) {
-  return wishlist.map(o => processListItem(o, availableResources)).filter(o => !!o);
+  return wishlist
+    .map(o => processListItem(o, availableResources))
+    .filter(o => !!o);
 }
 
-export { calculateProgress };
+function mapCollectionToProgress(collection) {
+  return mapKeys(collection, (value, key) => ({
+    id: key,
+    owned: value.count,
+    allocated: 0
+  }));
+}
+
+export { calculateProgress, mapCollectionToProgress };

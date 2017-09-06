@@ -3,7 +3,10 @@ function distinct(arr) {
 }
 
 function flatten(arr) {
-  return arr.reduce((sum, local) => local.length ? [...sum, ...local] : [...sum, local], []);
+  return arr.reduce(
+    (sum, local) => (local.length ? [...sum, ...local] : [...sum, local]),
+    []
+  );
 }
 
 export { distinct, flatten };

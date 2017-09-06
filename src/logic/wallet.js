@@ -1,4 +1,4 @@
-function buildWalletData(dataService) {
+function getWallet(dataService) {
   return dataService.getWallet().then(res => {
     let wallet = {};
     let currencyIds = [];
@@ -18,4 +18,4 @@ function buildWalletData(dataService) {
   });
 }
 
-export { buildWalletData };
+export { getWallet };

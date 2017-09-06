@@ -27,31 +27,50 @@ Gw2Api.prototype._apiFetch = function apiFetch(uri, authenticated) {
   return fetch(remoteUri, params).then(res => res.json());
 };
 
-Gw2Api.prototype._distributedFetch = function distributedFetch(workload, uriFactory, authenticated) {
+Gw2Api.prototype._distributedFetch = function distributedFetch(
+  workload,
+  uriFactory,
+  authenticated
+) {
   const workQuantity = 100;
 
   let offset = 0;
   let work = [];
   while (offset < workload.length) {
     work.push(
-      this._apiFetch(uriFactory(workload.slice(offset, offset + workQuantity)), authenticated)
+      this._apiFetch(
+        uriFactory(workload.slice(offset, offset + workQuantity)),
+        authenticated
+      )
     );
     offset += workQuantity;
   }
 
   return Promise.all(work).then(res => flatten(res));
-}
+};
 
 Gw2Api.prototype.getItems = function getItems(ids) {
-  return this._distributedFetch(ids, partial => "/items?ids=" + partial.join(","), false);
+  return this._distributedFetch(
+    ids,
+    partial => "/items?ids=" + partial.join(","),
+    false
+  );
 };
 
 Gw2Api.prototype.getPrices = function getPrices(ids) {
-  return this._distributedFetch(ids, partial => "/commerce/prices?ids=" + partial.join(","), false);
+  return this._distributedFetch(
+    ids,
+    partial => "/commerce/prices?ids=" + partial.join(","),
+    false
+  );
 };
 
 Gw2Api.prototype.getCurrencies = function getCurrencies(ids) {
-  return this._distributedFetch(ids, partial => "/currencies?ids=" + partial.join(","), false);
+  return this._distributedFetch(
+    ids,
+    partial => "/currencies?ids=" + partial.join(","),
+    false
+  );
 };
 
 Gw2Api.prototype.getCharacters = function getCharacters() {

@@ -57,7 +57,7 @@ function compileContents(inventoryData) {
   };
 }
 
-function buildInventoryData(dataService) {
+function getInventory(dataService) {
   return dataService
     .getCharacters()
     .then(characters =>
@@ -74,4 +74,4 @@ function buildInventoryData(dataService) {
     });
 }
 
-export { buildInventoryData };
+export { getInventory };
