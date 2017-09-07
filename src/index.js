@@ -20,16 +20,5 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-store.subscribe(() => {
-  let state = store.getState();
-  let resources = {
-    inventory: mapCollectionToProgress(state.accountData.inventory),
-    wallet: mapCollectionToProgress(state.accountData.wallet)
-  };
-
-  let progress = calculateProgress(state.wishlist, resources);
-  console.log(progress);
-});
-
 store.dispatch(setApiKey(apiKey));
 store.dispatch(setWishlist(wishlist));
