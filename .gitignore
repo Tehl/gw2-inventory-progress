@@ -58,4 +58,4 @@ typings/
 .env
 
 # Private files
-apiKey.js
+/src/apiKey.js
