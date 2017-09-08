@@ -62,7 +62,7 @@ const ItemComponents = ({ item, gameData }) => {
 const ProgressBar = ({ progress, text }) =>
   <div className="progress-container">
     <div
-      className="progress-bar"
+      className={"progress-bar" + (progress === 1 ? " complete" : "")}
       style={{ width: formatProgressPercent(progress) }}
     />
     <div className="progress-text">
