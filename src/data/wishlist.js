@@ -1,3 +1,4 @@
 import trinkets from "./trinkets";
+import torch from "./torch";
 
-export default [trinkets];
+export default [trinkets, torch];

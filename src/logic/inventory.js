@@ -4,7 +4,7 @@ import { getOrAdd } from "../utility/dictionary";
 function getCharacterContents(characters, dataService) {
   return characters.map(characterId =>
     dataService.getInventory(characterId).then(inventory =>
-      inventory.bags.map(bag => ({
+      inventory.bags.filter(bag => !!bag).map(bag => ({
         source: characterId,
         items: bag.inventory
       }))
