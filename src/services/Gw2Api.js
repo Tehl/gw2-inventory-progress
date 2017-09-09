@@ -96,4 +96,16 @@ Gw2Api.prototype.getWallet = function getWallet() {
   return this._apiFetch("/account/wallet", true);
 };
 
+Gw2Api.prototype.findRecipesFor = function findRecipesFor(itemId) {
+  return this._apiFetch("/recipes/search?output=" + itemId, false);
+};
+
+Gw2Api.prototype.getRecipes = function getRecipes(ids) {
+  return this._distributedFetch(
+    ids,
+    partial => "/recipes?ids=" + partial.join(","),
+    false
+  );
+};
+
 export default Gw2Api;
