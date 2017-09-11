@@ -1,21 +1,30 @@
+import recipes from "../../../data/recipes/index";
+
 function getIdsForItem(item) {
   let itemIds = [];
   let currencyIds = [];
 
+  const processInnerItem = innerItem => {
+    let innerIds = getIdsForItem(innerItem);
+    itemIds = itemIds.concat(innerIds.itemIds);
+    currencyIds = currencyIds.concat(innerIds.currencyIds);
+  };
+
   if (item.itemId) {
     itemIds.push(item.itemId);
+
+    let recipe = recipes[item.itemId];
+    if (recipe) {
+      recipe.components.forEach(processInnerItem)
+    }
   }
 
   if (item.currencyId) {
     currencyIds.push(item.currencyId);
   }
 
-  if (item.items) {
-    item.items.forEach(innerItem => {
-      let innerIds = getIdsForItem(innerItem);
-      itemIds = itemIds.concat(innerIds.itemIds);
-      currencyIds = currencyIds.concat(innerIds.currencyIds);
-    });
+  if (item.components) {
+    item.components.forEach(processInnerItem);
   }
 
   return {
@@ -26,7 +35,7 @@ function getIdsForItem(item) {
 
 function getRequiredData(wishlist) {
   return getIdsForItem({
-    items: wishlist
+    components: wishlist
   });
 }
 

@@ -46,13 +46,13 @@ const ProgressSummary = ({ item }) =>
   </div>;
 
 const ItemComponents = ({ item, gameData }) => {
-  if (!item.items) {
+  if (!item.components) {
     return null;
   }
 
   return (
     <div className="item-components">
-      {item.items.map((inner, idx) =>
+      {item.components.map((inner, idx) =>
         <WishlistItem key={idx} item={inner} gameData={gameData} />
       )}
     </div>

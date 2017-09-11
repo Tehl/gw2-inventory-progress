@@ -1,4 +1,4 @@
 import trinkets from "./trinkets";
-import torch from "./torch";
+import astralaria from "./astralaria";
 
-export default [trinkets, torch];
+export default [trinkets, astralaria];

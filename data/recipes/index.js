@@ -1,7 +1,12 @@
 import legendaries from "./legendaries";
 import generated from "./generated";
 
-export default {
-  ...legendaries,
+const recipes = {
   ...generated
 };
+
+legendaries.forEach(recipe => {
+  recipes[recipe.itemId] = recipe;
+});
+
+export default recipes;

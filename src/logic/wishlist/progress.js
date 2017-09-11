@@ -1,4 +1,5 @@
 import { mapKeys } from "../../utility/object";
+import recipes from "../../../data/recipes/index.js";
 
 function processResourceItem(resourceItem, resourceCollection, key) {
   let result = {
@@ -24,11 +25,33 @@ function processResourceItem(resourceItem, resourceCollection, key) {
 }
 
 function processInventoryItem(inventoryItem, availableResources) {
-  return processResourceItem(
+  let result = processResourceItem(
     inventoryItem,
     availableResources.inventory,
     "itemId"
   );
+
+  let outstanding = result.required - result.owned;
+  if (outstanding) {
+    let recipe = recipes[inventoryItem.itemId];
+    if (recipe) {
+      let requiredItems = recipe.components.map(component => ({
+        itemId: component.itemId,
+        count: outstanding * component.count
+      }));
+
+      let requiredItemProgress = processCollectionItem(
+        {
+          components: requiredItems
+        },
+        availableResources
+      );
+
+      result.components = requiredItemProgress.components;
+    }
+  }
+
+  return result;
 }
 
 function processCurrencyItem(currencyItem, availableResources) {
@@ -42,13 +65,13 @@ function processCurrencyItem(currencyItem, availableResources) {
 function processCollectionItem(collectionItem, availableResources) {
   let result = {
     name: collectionItem.name,
-    items: collectionItem.items.map(o => processListItem(o, availableResources))
+    components: collectionItem.components.map(o => processListItem(o, availableResources))
   };
 
-  if (result.items.length) {
-    let progress = result.items.reduce((sum, o) => sum + o.progress, 0);
+  if (result.components.length) {
+    let progress = result.components.reduce((sum, o) => sum + o.progress, 0);
     if (progress) {
-      progress /= result.items.length;
+      progress /= result.components.length;
     }
     result.progress = progress;
   } else {
@@ -67,7 +90,7 @@ function processListItem(listItem, availableResources) {
     return processCurrencyItem(listItem, availableResources);
   }
 
-  if (listItem.items) {
+  if (listItem.components) {
     return processCollectionItem(listItem, availableResources);
   }
 
