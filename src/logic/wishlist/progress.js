@@ -48,6 +48,10 @@ function processInventoryItem(inventoryItem, availableResources) {
       );
 
       result.components = requiredItemProgress.components;
+      result.componentProgress = requiredItemProgress.progress;
+      
+      result.itemProgress = result.progress;
+      result.progress += (1 - result.progress) * result.componentProgress;
     }
   }
 
