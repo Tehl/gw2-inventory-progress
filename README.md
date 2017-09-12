@@ -1,1 +1,1 @@
-# gw2-inventory-progress
+# gw2-progress-tracker
