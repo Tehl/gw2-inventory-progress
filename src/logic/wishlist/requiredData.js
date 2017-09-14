@@ -15,12 +15,16 @@ function getIdsForItem(item) {
 
     let recipe = recipes[item.itemId];
     if (recipe) {
-      recipe.components.forEach(processInnerItem)
+      recipe.components.forEach(processInnerItem);
     }
   }
 
   if (item.currencyId) {
     currencyIds.push(item.currencyId);
+  }
+
+  if (item.substitutionFor) {
+    itemIds.push(item.substitutionFor);
   }
 
   if (item.components) {

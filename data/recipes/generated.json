@@ -1,4 +1,18 @@
 {
+  "9461": {
+    "itemId": 9461,
+    "components": [
+      { "itemId": 24277, "count": 3 },
+      { "itemId": 12156, "count": 20 }
+    ]
+  },
+  "12988": {
+    "itemId": 12988,
+    "components": [
+      { "itemId": 19712, "count": 2 },
+      { "itemId": 19685, "count": 3 }
+    ]
+  },
   "19681": {
     "itemId": 19681,
     "components": [
@@ -8,11 +22,30 @@
   },
   "19683": { "itemId": 19683, "components": [{ "itemId": 19699, "count": 3 }] },
   "19684": { "itemId": 19684, "components": [{ "itemId": 19700, "count": 2 }] },
+  "19685": { "itemId": 19685, "components": [{ "itemId": 19701, "count": 2 }] },
   "19688": {
     "itemId": 19688,
     "components": [
       { "itemId": 19699, "count": 3 },
       { "itemId": 19750, "count": 1 }
+    ]
+  },
+  "19709": { "itemId": 19709, "components": [{ "itemId": 19722, "count": 3 }] },
+  "19711": { "itemId": 19711, "components": [{ "itemId": 19724, "count": 3 }] },
+  "19712": { "itemId": 19712, "components": [{ "itemId": 19725, "count": 3 }] },
+  "19713": { "itemId": 19713, "components": [{ "itemId": 19726, "count": 2 }] },
+  "19714": { "itemId": 19714, "components": [{ "itemId": 19727, "count": 3 }] },
+  "19733": { "itemId": 19733, "components": [{ "itemId": 19728, "count": 2 }] },
+  "19734": { "itemId": 19734, "components": [{ "itemId": 19730, "count": 2 }] },
+  "19735": { "itemId": 19735, "components": [{ "itemId": 19729, "count": 4 }] },
+  "19736": { "itemId": 19736, "components": [{ "itemId": 19731, "count": 2 }] },
+  "46736": {
+    "itemId": 46736,
+    "components": [
+      { "itemId": 19713, "count": 20 },
+      { "itemId": 19714, "count": 10 },
+      { "itemId": 19711, "count": 20 },
+      { "itemId": 46744, "count": 1 }
     ]
   },
   "46738": {
@@ -24,13 +57,72 @@
       { "itemId": 46742, "count": 1 }
     ]
   },
+  "46739": {
+    "itemId": 46739,
+    "components": [
+      { "itemId": 19733, "count": 20 },
+      { "itemId": 19734, "count": 10 },
+      { "itemId": 19736, "count": 20 },
+      { "itemId": 46745, "count": 1 }
+    ]
+  },
+  "46744": {
+    "itemId": 46744,
+    "components": [
+      { "itemId": 19709, "count": 50 },
+      { "itemId": 19721, "count": 1 },
+      { "itemId": 46747, "count": 10 }
+    ]
+  },
+  "46745": {
+    "itemId": 46745,
+    "components": [
+      { "itemId": 19735, "count": 50 },
+      { "itemId": 19721, "count": 1 },
+      { "itemId": 46747, "count": 10 }
+    ]
+  },
+  "70868": {
+    "itemId": 70868,
+    "components": [
+      { "itemId": 46738, "count": 15 },
+      { "itemId": 71581, "count": 50 },
+      { "itemId": 70820, "count": 50 }
+    ]
+  },
+  "70952": {
+    "itemId": 70952,
+    "components": [
+      { "itemId": 46736, "count": 10 },
+      { "itemId": 71581, "count": 50 },
+      { "itemId": 70820, "count": 50 }
+    ]
+  },
+  "70989": {
+    "itemId": 70989,
+    "components": [
+      { "itemId": 70730, "count": 1 },
+      { "itemId": 70868, "count": 1 },
+      { "itemId": 70952, "count": 1 },
+      { "itemId": 72261, "count": 1 }
+    ]
+  },
   "71426": {
     "itemId": 71426,
     "components": [
       { "itemId": 74457, "count": 1 },
-      { "itemId": 74492, "count": 1 },
+      { "itemId": 75974, "count": 1, "substitutionFor": 74492 },
       { "itemId": 75333, "count": 1 },
       { "itemId": 72724, "count": 1 }
+    ]
+  },
+  "72261": {
+    "itemId": 72261,
+    "components": [
+      { "itemId": 19721, "count": 10 },
+      { "itemId": 24277, "count": 5 },
+      { "itemId": 12988, "count": 1 },
+      { "itemId": 46739, "count": 10 }
     ]
   },
   "72724": {
@@ -42,6 +134,24 @@
       { "itemId": 46747, "count": 10 }
     ]
   },
+  "73517": {
+    "itemId": 73517,
+    "components": [
+      { "itemId": 24320, "count": 1 },
+      { "itemId": 24315, "count": 1 },
+      { "itemId": 24310, "count": 1 },
+      { "itemId": 24305, "count": 1 }
+    ]
+  },
+  "75316": {
+    "itemId": 75316,
+    "components": [
+      { "itemId": 46731, "count": 250 },
+      { "itemId": 68063, "count": 1 },
+      { "itemId": 46747, "count": 10 },
+      { "itemId": 9461, "count": 10 }
+    ]
+  },
   "75333": {
     "itemId": 75333,
     "components": [
@@ -49,6 +159,15 @@
       { "itemId": 19684, "count": 150 },
       { "itemId": 71641, "count": 50 },
       { "itemId": 19683, "count": 250 }
+    ]
+  },
+  "75974": {
+    "itemId": 75974,
+    "components": [
+      { "itemId": 72622, "count": 1 },
+      { "itemId": 70989, "count": 1, "substitutionFor": 74158 },
+      { "itemId": 75316, "count": 1 },
+      { "itemId": 73517, "count": 1 }
     ]
   }
 }

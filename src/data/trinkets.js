@@ -2,6 +2,13 @@ export default {
   name: "Ascended Trinkets",
   components: [
     {
+      name: "Jade Pendant",
+      components: [
+        { currencyId: 32, count: 3000 }, // Unbound Magic
+        { itemId: 80332, count: 125 } // Jade Shard
+      ]
+    },
+    {
       name: "Black Ice Earring",
       components: [
         { currencyId: 32, count: 4000 }, // Unbound Magic
@@ -13,13 +20,6 @@ export default {
       components: [
         { currencyId: 32, count: 4000 }, // Unbound Magic
         { itemId: 79469, count: 150 } // Petrified Wood
-      ]
-    },
-    {
-      name: "Jade Pendant",
-      components: [
-        { currencyId: 32, count: 3000 }, // Unbound Magic
-        { itemId: 80332, count: 300 } // Jade Shard
       ]
     },
     {

@@ -4,7 +4,8 @@ import recipes from "../../../data/recipes/index.js";
 function processResourceItem(resourceItem, resourceCollection, key) {
   let result = {
     [key]: resourceItem[key],
-    required: resourceItem.count
+    required: resourceItem.count,
+    substitutionFor: resourceItem.substitutionFor,
   };
 
   let ownedResource = resourceCollection[resourceItem[key]];
@@ -37,7 +38,8 @@ function processInventoryItem(inventoryItem, availableResources) {
     if (recipe) {
       let requiredItems = recipe.components.map(component => ({
         itemId: component.itemId,
-        count: outstanding * component.count
+        count: outstanding * component.count,
+        substitutionFor: component.substitutionFor
       }));
 
       let requiredItemProgress = processCollectionItem(
@@ -49,7 +51,7 @@ function processInventoryItem(inventoryItem, availableResources) {
 
       result.components = requiredItemProgress.components;
       result.componentProgress = requiredItemProgress.progress;
-      
+
       result.itemProgress = result.progress;
       result.progress += (1 - result.progress) * result.componentProgress;
     }
@@ -69,7 +71,9 @@ function processCurrencyItem(currencyItem, availableResources) {
 function processCollectionItem(collectionItem, availableResources) {
   let result = {
     name: collectionItem.name,
-    components: collectionItem.components.map(o => processListItem(o, availableResources))
+    components: collectionItem.components.map(o =>
+      processListItem(o, availableResources)
+    )
   };
 
   if (result.components.length) {

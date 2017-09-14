@@ -1,4 +1,5 @@
 import { distinct, except } from "../../src/utility/array";
+import equivalentItems from "../../data/equivalentItems";
 
 function RecipeBuilder() {
   this._db = {};
@@ -9,12 +10,23 @@ RecipeBuilder.prototype._parseEntry = function parseEntry(recipe) {
   let dbEntry = {
     itemId: recipe.output_item_id,
     components: recipe.ingredients.map(ingredient => {
-      componentIds.push(String(ingredient.item_id));
-
-      return {
-        itemId: ingredient.item_id,
+      let itemId = ingredient.item_id;
+      let result = {
+        itemId,
         count: ingredient.count
       };
+
+      let equivalentTo = equivalentItems[itemId];
+      if (equivalentTo) {
+        result.itemId = equivalentTo;
+        result.substitutionFor = itemId;
+
+        console.log("Substituted item " + equivalentTo + " for " + itemId);
+      }
+
+      componentIds.push(String(result.itemId));
+
+      return result;
     })
   };
 

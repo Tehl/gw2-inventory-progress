@@ -33,6 +33,13 @@ const ItemName = ({ item, gameData }) => {
     className += " unknown";
   }
 
+  if (item.substitutionFor) {
+    let substitutionData = gameData.items[item.substitutionFor];
+    if (substitutionData) {
+      name += " => " + substitutionData.name;
+    }
+  }
+
   return (
     <div className={className}>
       {name}
