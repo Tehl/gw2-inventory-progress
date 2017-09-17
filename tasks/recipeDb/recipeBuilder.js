@@ -1,5 +1,6 @@
 import { distinct, except } from "../../src/utility/array";
 import equivalentItems from "../../data/equivalentItems";
+import highPriorityComponents from "../../data/highPriorityComponents";
 
 function RecipeBuilder() {
   this._db = {};
@@ -29,6 +30,14 @@ RecipeBuilder.prototype._parseEntry = function parseEntry(recipe) {
       return result;
     })
   };
+
+  let sortedComponents = dbEntry.components.filter(
+    o => highPriorityComponents.indexOf(o.itemId) > -1
+  );
+  sortedComponents = sortedComponents.concat(
+    except(dbEntry.components, sortedComponents)
+  );
+  dbEntry.components = sortedComponents;
 
   return {
     componentIds,

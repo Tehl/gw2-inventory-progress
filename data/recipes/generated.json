@@ -183,8 +183,8 @@
   "71426": {
     "itemId": 71426,
     "components": [
-      { "itemId": 74457, "count": 1 },
       { "itemId": 75974, "count": 1, "substitutionFor": 74492 },
+      { "itemId": 74457, "count": 1 },
       { "itemId": 75333, "count": 1 },
       { "itemId": 72724, "count": 1 }
     ]
@@ -324,8 +324,8 @@
   "75974": {
     "itemId": 75974,
     "components": [
-      { "itemId": 72622, "count": 1 },
       { "itemId": 70989, "count": 1, "substitutionFor": 74158 },
+      { "itemId": 72622, "count": 1 },
       { "itemId": 75316, "count": 1 },
       { "itemId": 73517, "count": 1 }
     ]
