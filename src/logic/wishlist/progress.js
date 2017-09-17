@@ -5,7 +5,7 @@ function processResourceItem(resourceItem, resourceCollection, key) {
   let result = {
     [key]: resourceItem[key],
     required: resourceItem.count,
-    substitutionFor: resourceItem.substitutionFor,
+    substitutionFor: resourceItem.substitutionFor
   };
 
   let ownedResource = resourceCollection[resourceItem[key]];
@@ -38,6 +38,7 @@ function processInventoryItem(inventoryItem, availableResources) {
     if (recipe) {
       let requiredItems = recipe.components.map(component => ({
         itemId: component.itemId,
+        currencyId: component.currencyId,
         count: outstanding * component.count,
         substitutionFor: component.substitutionFor
       }));

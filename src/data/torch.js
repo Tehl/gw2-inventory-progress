@@ -18,11 +18,11 @@ export default {
           ]
         },
         {
-            name: "Orichalcum Plated Dowel",
-            items: [
-                { itemId: 19685, count: 15 }, // Orichalcum Ingot
-                { itemId: 19712, count: 10 } // Ancient Wood Plank
-            ]
+          name: "Orichalcum Plated Dowel",
+          items: [
+            { itemId: 19685, count: 15 }, // Orichalcum Ingot
+            { itemId: 19712, count: 10 } // Ancient Wood Plank
+          ]
         },
         { itemId: 19721, count: 5 }, // Glob of Ectoplasm
         { itemId: 74328, count: 30 }, // Leaf Fossil
