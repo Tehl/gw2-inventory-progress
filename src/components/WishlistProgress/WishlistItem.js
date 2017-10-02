@@ -1,4 +1,5 @@
 import React from "react";
+import ProgressBar from "../ProgressBar/ProgressBar";
 
 function formatProgressText(item) {
   if (item.required === undefined) {
@@ -66,25 +67,35 @@ const ItemComponents = ({ item, gameData }) => {
   );
 };
 
-const ProgressBar = ({ progress, text }) =>
-  <div className="progress-container">
-    <div
-      className={"progress-bar" + (progress === 1 ? " complete" : "")}
-      style={{ width: formatProgressPercent(progress) }}
-    />
-    <div className="progress-text">
-      {text}
-    </div>
-  </div>;
+const WishlistItem = ({ item, gameData }) => {
+  let progressBar;
+  if (item.itemProgress !== undefined && item.itemProgress < item.progress) {
+    progressBar = (
+      <ProgressBar
+        primaryProgress={item.itemProgress}
+        secondaryProgress={item.progress}
+        text={formatProgressText(item)}
+      />
+    );
+  } else {
+    progressBar = (
+      <ProgressBar
+        primaryProgress={item.progress}
+        text={formatProgressText(item)}
+      />
+    );
+  }
 
-const WishlistItem = ({ item, gameData }) =>
-  <div className="item-progress">
-    <div className="item-details">
-      <ProgressSummary item={item} />
-      <ItemName item={item} gameData={gameData} />
+  return (
+    <div className="item-progress">
+      <div className="item-details">
+        <ProgressSummary item={item} />
+        <ItemName item={item} gameData={gameData} />
+      </div>
+      {progressBar}
+      <ItemComponents item={item} gameData={gameData} />
     </div>
-    <ProgressBar progress={item.progress} text={formatProgressText(item)} />
-    <ItemComponents item={item} gameData={gameData} />
-  </div>;
+  );
+};
 
 export default WishlistItem;

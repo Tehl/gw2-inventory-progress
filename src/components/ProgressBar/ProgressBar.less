@@ -1,0 +1,41 @@
+.progress-container {
+  width: 100%;
+  height: 25px;
+  line-height: 25px;
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: inset 0 0 10px #ccc;
+}
+
+.progress-bar {
+  position: absolute;
+  height: 100%;
+  background: #beb;
+  border-radius: 5px;
+  border-right: 1px solid #ccc;
+  box-shadow: 6px 0px 6px -4px #ccc, inset 0 0 5px #9c9;
+
+  &.progress-primary {
+    background: #CAFF9E;
+    z-index: 10;
+  }
+
+  &.progress-secondary {
+    background: #beb;
+    z-index: 5;
+  }
+
+  &.complete {
+    border-right: 0;
+    box-shadow: inset 0 0 5px #9c9;
+  }
+}
+
+.progress-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: right;
+  padding-right: 5px;
+}
