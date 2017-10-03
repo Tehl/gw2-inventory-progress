@@ -1,3 +1,4 @@
 import astralaria from "./astralaria";
+import backpacks from "./backpacks";
 
-export default [astralaria];
+export default [backpacks, astralaria];
