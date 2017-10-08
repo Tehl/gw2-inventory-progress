@@ -96,6 +96,10 @@ Gw2Api.prototype.getWallet = function getWallet() {
   return this._apiFetch("/account/wallet", true);
 };
 
+Gw2Api.prototype.getAchievements = function getAchievements() {
+  return this._apiFetch("/account/achievements", true);
+};
+
 Gw2Api.prototype.findRecipesFor = function findRecipesFor(itemId) {
   return this._apiFetch("/recipes/search?output=" + itemId, false);
 };

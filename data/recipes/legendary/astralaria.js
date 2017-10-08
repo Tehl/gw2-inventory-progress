@@ -10,6 +10,7 @@ export default [
   },
   {
     itemId: 72622, // Expertise in Advanced Axe Crafting
+    achievementId: 2447,
     components: [
       { itemId: 72604, count: 1 }, // Basic Axe Requisition
       { itemId: 75145, count: 1 }, // Precise Axe Forging Tools
@@ -22,54 +23,70 @@ export default [
       { itemId: 72373, count: 1 }, // Ancient Water Magics: Axe Edition Vol. 2
       { itemId: 71265, count: 1 }, // Herbal Magics: Axe Edition Vol. 2
       { itemId: 73030, count: 1 }, // Stabilizing Magics: Axe Edition Vol. 2
-      { itemId: 76925, count: 1} // Astralaria Vol. 2
+      { itemId: 76925, count: 1 } // Astralaria Vol. 2
     ]
   },
   {
     itemId: 72604, // Basic Axe Requisition
+    achievementId: 2447,
+    achievementBitFlag: 5,
     components: [
       { itemId: 76963, count: 250 } // Basic Mithril Axe
     ]
   },
   {
     itemId: 73016, // Jungle Magics: Axe Edition Vol. 2
+    achievementId: 2447,
+    achievementBitFlag: 7,
     components: [
       { currencyId: 25, count: 400 } // Geode
     ]
   },
   {
     itemId: 73488, // Old World Magics: Axe Edition Vol. 2
+    achievementId: 2447,
+    achievementBitFlag: 8,
     components: [
       { itemId: 19925, count: 100 } // Obsidian Shard
     ]
   },
   {
     itemId: 72373, // Ancient Water Magics: Axe Edition Vol. 2
+    achievementId: 2447,
+    achievementBitFlag: 9,
     components: [
       { itemId: 37897, count: 100 } // Karka Shell
     ]
   },
   {
     itemId: 71265, // Herbal Magics: Axe Edition Vol. 2
+    achievementId: 2447,
+    achievementBitFlag: 10,
     components: [
       { itemId: 37907, count: 25 } // Passion Flower
     ]
   },
   {
     itemId: 73030, // Stabilizing Magics: Axe Edition Vol. 2
+    achievementId: 2447,
+    achievementBitFlag: 11,
     components: [
       { itemId: 73248, count: 25 } // Stabilizing Matrix
     ]
   },
   {
     itemId: 76925, // Astralaria Vol. 2
+    achievementId: 2447,
+    achievementBitFlag: 12,
     components: [
       { currencyId: 23, count: 5 }, // Spirit Shard
-      { currencyId: 2, count: 10003 } // Karm
+      { currencyId: 2, count: 10003 } // Karma
     ]
   },
   {
     itemId: 76004, // The Art of Forging: Axe Blade Edition Vol. 2
+    achievementId: 2447,
+    achievementBitFlag: 0,
     components: [
       { itemId: 12848, count: 10 }, // Bronze Axe Blade
       { itemId: 12850, count: 10 }, // Iron Axe Blade
@@ -82,6 +99,8 @@ export default [
   },
   {
     itemId: 76619, // The Art of Woodworking: Axe Haft Edition Vol. 2
+    achievementId: 2447,
+    achievementBitFlag: 2,
     components: [
       { itemId: 12891, count: 10 }, // Small Green Haft
       { itemId: 12890, count: 10 }, // Small Soft Haft

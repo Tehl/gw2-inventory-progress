@@ -1,6 +1,59 @@
 import { mapKeys } from "../../utility/object";
 import recipes from "../../../data/recipes/index.js";
 
+function hasCompletedAchievement(recipe, achievements) {
+  if (recipe.achievementId === undefined) {
+    return false;
+  }
+
+  let achievement = achievements[recipe.achievementId];
+  if (!achievement) {
+    return false;
+  }
+
+  if (achievement.done) {
+    return true;
+  }
+
+  if (recipe.achievementBitFlag === undefined) {
+    return false;
+  }
+
+  return (
+    achievement.bits && achievement.bits.indexOf(recipe.achievementBitFlag) > -1
+  );
+}
+
+function calculateRecipeProgress(
+  progress,
+  outstanding,
+  recipe,
+  availableResources,
+  achievements
+) {
+  let requiredItems = recipe.components.map(component => ({
+    itemId: component.itemId,
+    currencyId: component.currencyId,
+    count: outstanding * component.count,
+    substitutionFor: component.substitutionFor
+  }));
+
+  let requiredItemProgress = processCollectionItem(
+    {
+      components: requiredItems
+    },
+    availableResources,
+    achievements
+  );
+
+  return {
+    components: requiredItemProgress.components,
+    componentProgress: requiredItemProgress.progress,
+    itemProgress: progress,
+    progress: progress + (1 - progress) * requiredItemProgress.progress
+  };
+}
+
 function processResourceItem(resourceItem, resourceCollection, key) {
   let result = {
     [key]: resourceItem[key],
@@ -25,7 +78,7 @@ function processResourceItem(resourceItem, resourceCollection, key) {
   return result;
 }
 
-function processInventoryItem(inventoryItem, availableResources) {
+function processInventoryItem(inventoryItem, availableResources, achievements) {
   let result = processResourceItem(
     inventoryItem,
     availableResources.inventory,
@@ -36,32 +89,30 @@ function processInventoryItem(inventoryItem, availableResources) {
   if (outstanding) {
     let recipe = recipes[inventoryItem.itemId];
     if (recipe) {
-      let requiredItems = recipe.components.map(component => ({
-        itemId: component.itemId,
-        currencyId: component.currencyId,
-        count: outstanding * component.count,
-        substitutionFor: component.substitutionFor
-      }));
+      if (hasCompletedAchievement(recipe, achievements)) {
+        result.owned = 1;
+        result.progress = 1 / result.required;
 
-      let requiredItemProgress = processCollectionItem(
-        {
-          components: requiredItems
-        },
-        availableResources
-      );
+        return result;
+      }
 
-      result.components = requiredItemProgress.components;
-      result.componentProgress = requiredItemProgress.progress;
-
-      result.itemProgress = result.progress;
-      result.progress += (1 - result.progress) * result.componentProgress;
+      result = {
+        ...result,
+        ...calculateRecipeProgress(
+          result.progress,
+          outstanding,
+          recipe,
+          availableResources,
+          achievements
+        )
+      };
     }
   }
 
   return result;
 }
 
-function processCurrencyItem(currencyItem, availableResources) {
+function processCurrencyItem(currencyItem, availableResources, achievements) {
   return processResourceItem(
     currencyItem,
     availableResources.wallet,
@@ -69,11 +120,15 @@ function processCurrencyItem(currencyItem, availableResources) {
   );
 }
 
-function processCollectionItem(collectionItem, availableResources) {
+function processCollectionItem(
+  collectionItem,
+  availableResources,
+  achievements
+) {
   let result = {
     name: collectionItem.name,
     components: collectionItem.components.map(o =>
-      processListItem(o, availableResources)
+      processListItem(o, availableResources, achievements)
     )
   };
 
@@ -90,25 +145,25 @@ function processCollectionItem(collectionItem, availableResources) {
   return result;
 }
 
-function processListItem(listItem, availableResources) {
+function processListItem(listItem, availableResources, achievements) {
   if (listItem.itemId) {
-    return processInventoryItem(listItem, availableResources);
+    return processInventoryItem(listItem, availableResources, achievements);
   }
 
   if (listItem.currencyId) {
-    return processCurrencyItem(listItem, availableResources);
+    return processCurrencyItem(listItem, availableResources, achievements);
   }
 
   if (listItem.components) {
-    return processCollectionItem(listItem, availableResources);
+    return processCollectionItem(listItem, availableResources, achievements);
   }
 
   return undefined;
 }
 
-function calculateProgress(wishlist, availableResources) {
+function calculateProgress(wishlist, availableResources, achievements) {
   return wishlist
-    .map(o => processListItem(o, availableResources))
+    .map(o => processListItem(o, availableResources, achievements))
     .filter(o => !!o);
 }
 

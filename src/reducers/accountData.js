@@ -2,7 +2,8 @@ const ACCOUNT_DATA_UPDATED = "ACCOUNT_DATA_UPDATED";
 
 const defaultState = {
   inventory: {},
-  wallet: {}
+  wallet: {},
+  achievements: {}
 };
 
 const loadAccountData = (state = defaultState, action) => {
