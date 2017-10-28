@@ -1,7 +1,24 @@
 import { getRequiredData } from "./wishlist/requiredData";
 import {
-  calculateProgress,
-  mapCollectionToProgress
+  mapCollectionToProgress,
+  calculateProgress
 } from "./wishlist/progress";
+import { processBreakdownItem } from "./wishlist/progressBreakdown";
+import { processSummaryItem } from "./wishlist/progressSummary";
 
-export { getRequiredData, calculateProgress, mapCollectionToProgress };
+const calculateProgressBreakdown = calculateProgress.bind(
+  undefined,
+  processBreakdownItem
+);
+
+const calculateProgressSummary = calculateProgress.bind(
+  undefined,
+  processSummaryItem
+);
+
+export {
+  getRequiredData,
+  mapCollectionToProgress,
+  calculateProgressBreakdown,
+  calculateProgressSummary
+};

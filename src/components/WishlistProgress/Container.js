@@ -1,18 +1,26 @@
 import { connect } from "react-redux";
 import {
   mapCollectionToProgress,
-  calculateProgress
+  calculateProgressBreakdown,
+  calculateProgressSummary
 } from "../../logic/wishlist";
+import { PROGRESS_TYPE_SUMMARY } from "../../reducers/options";
 import Wishlist from "./Wishlist";
 
 const mapStateToProps = state => {
-  let resources = {
+  const resources = {
     inventory: mapCollectionToProgress(state.accountData.inventory),
     wallet: mapCollectionToProgress(state.accountData.wallet)
   };
-  let achievements = state.accountData.achievements;
+  const achievements = state.accountData.achievements;
+  const progressType = state.options.progressType;
 
-  let progress = calculateProgress(state.wishlist, resources, achievements);
+  const calculateProgress =
+    progressType === PROGRESS_TYPE_SUMMARY
+      ? calculateProgressSummary
+      : calculateProgressBreakdown;
+
+  const progress = calculateProgress(state.wishlist, resources, achievements);
 
   return {
     wishlist: progress,
