@@ -1,38 +1,28 @@
+import { flatten } from "../../utility/array";
 import recipes from "../../../data/recipes/index.js";
-import { hasCompletedAchievement, processResourceItem } from "./progress";
+import { hasCompletedAchievement, allocateResourceItem } from "./progress";
 
-function calculateRecipeProgress(
-  progress,
-  outstanding,
-  recipe,
-  availableResources,
-  achievements
-) {
-  let requiredItems = recipe.components.map(component => ({
+function multiplyComponents(components, factor) {
+  return components.map(component => ({
     itemId: component.itemId,
     currencyId: component.currencyId,
-    count: outstanding * component.count,
+    count: factor * component.count,
     substitutionFor: component.substitutionFor
   }));
+}
 
-  let requiredItemProgress = processCollectionItem(
-    {
-      components: requiredItems
-    },
-    availableResources,
-    achievements
-  );
+function expandComponentsForItem(item) {
+  let recipe = recipes[item.itemId];
+  if (!recipe) {
+    return [item];
+  }
 
-  return {
-    components: requiredItemProgress.components,
-    componentProgress: requiredItemProgress.progress,
-    itemProgress: progress,
-    progress: progress + (1 - progress) * requiredItemProgress.progress
-  };
+  let result = multiplyComponents(recipe.components, item.count);
+  return flatten(result.map(expandComponentsForItem));
 }
 
 function processInventoryItem(inventoryItem, availableResources, achievements) {
-  let result = processResourceItem(
+  let result = allocateResourceItem(
     inventoryItem,
     availableResources.inventory,
     "itemId"
@@ -40,18 +30,43 @@ function processInventoryItem(inventoryItem, availableResources, achievements) {
 
   let recipe = recipes[inventoryItem.itemId];
   if (!recipe) {
-    return result;
+    return [result];
   }
 
-  return result;
+  let outstanding = result.required - result.owned;
+
+  let ownedComponentsViaCompletedItems = flatten(
+    multiplyComponents(recipe.components, result.owned).map(
+      expandComponentsForItem
+    )
+  ).map(o => ({
+    itemId: o.itemId,
+    owned: o.count,
+    required: o.count,
+    substitutionFor: o.substitutionFor
+  }));
+
+  let outstandingItems = multiplyComponents(recipe.components, outstanding);
+  let outstandingItemProgress = processCollectionItem(
+    {
+      components: outstandingItems
+    },
+    availableResources,
+    achievements
+  );
+
+  let allComponents = [
+    ...ownedComponentsViaCompletedItems,
+    ...outstandingItemProgress
+  ];
+
+  return sumComponents(allComponents);
 }
 
 function processCurrencyItem(currencyItem, availableResources, achievements) {
-  return processResourceItem(
-    currencyItem,
-    availableResources.wallet,
-    "currencyId"
-  );
+  return [
+    allocateResourceItem(currencyItem, availableResources.wallet, "currencyId")
+  ];
 }
 
 function processCollectionItem(
@@ -59,24 +74,11 @@ function processCollectionItem(
   availableResources,
   achievements
 ) {
-  let result = {
-    name: collectionItem.name,
-    components: collectionItem.components.map(o =>
+  return flatten(
+    collectionItem.components.map(o =>
       processListItem(o, availableResources, achievements)
     )
-  };
-
-  if (result.components.length) {
-    let progress = result.components.reduce((sum, o) => sum + o.progress, 0);
-    if (progress) {
-      progress /= result.components.length;
-    }
-    result.progress = progress;
-  } else {
-    result.progress = 0;
-  }
-
-  return result;
+  );
 }
 
 function processListItem(listItem, availableResources, achievements) {
@@ -92,9 +94,78 @@ function processListItem(listItem, availableResources, achievements) {
     return processCollectionItem(listItem, availableResources, achievements);
   }
 
-  return undefined;
+  return [];
 }
 
-const processSummaryItem = processListItem;
+function sumComponentsByKey(components, key) {
+  let totals = {};
+
+  components.forEach(o => {
+    let elementId = o[key];
+    if (elementId === undefined) {
+      return;
+    }
+
+    let total = totals[elementId];
+
+    if (!total) {
+      total = {
+        owned: 0,
+        required: 0
+      };
+      totals[elementId] = total;
+    }
+
+    total.owned += o.owned;
+    total.required += o.required;
+  });
+
+  return Object.keys(totals).map(elementId => ({
+    [key]: elementId,
+    ...totals[elementId]
+  }));
+}
+
+function sumComponents(components) {
+  return [
+    ...sumComponentsByKey(components, "itemId"),
+    ...sumComponentsByKey(components, "currencyId")
+  ];
+}
+
+function processSummaryItem(listItem, availableResources, achievements) {
+  let components = flatten(
+    processListItem(listItem, availableResources, achievements)
+  );
+
+  components = sumComponents(components);
+
+  components.forEach(o => {
+    if (o.required) {
+      o.progress = o.owned / o.required;
+    } else {
+      o.progress = 0;
+    }
+  });
+
+  let result = {
+    name: listItem.name,
+    itemId: listItem.itemId,
+    currencyId: listItem.currencyId,
+    components: components
+  };
+
+  if (result.components.length) {
+    let progress = result.components.reduce((sum, o) => sum + o.progress, 0);
+    if (progress) {
+      progress /= result.components.length;
+    }
+    result.progress = progress;
+  } else {
+    result.progress = 0;
+  }
+
+  return result;
+}
 
 export { processSummaryItem };

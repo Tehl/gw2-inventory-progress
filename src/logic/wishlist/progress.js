@@ -42,7 +42,7 @@ function calculateProgress(
     .filter(o => !!o);
 }
 
-function processResourceItem(resourceItem, resourceCollection, key) {
+function allocateResourceItem(resourceItem, resourceCollection, key) {
   let result = {
     [key]: resourceItem[key],
     required: resourceItem.count,
@@ -55,12 +55,10 @@ function processResourceItem(resourceItem, resourceCollection, key) {
     let allocatedToResult = Math.min(availableCount, result.required);
 
     result.owned = allocatedToResult;
-    result.progress = result.owned / result.required;
 
     ownedResource.allocated += allocatedToResult;
   } else {
     result.owned = 0;
-    result.progress = 0;
   }
 
   return result;
@@ -70,5 +68,5 @@ export {
   calculateProgress,
   mapCollectionToProgress,
   hasCompletedAchievement,
-  processResourceItem
+  allocateResourceItem
 };

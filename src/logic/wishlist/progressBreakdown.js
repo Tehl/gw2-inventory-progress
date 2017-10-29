@@ -1,5 +1,5 @@
 import recipes from "../../../data/recipes/index.js";
-import { hasCompletedAchievement, processResourceItem } from "./progress";
+import { hasCompletedAchievement, allocateResourceItem } from "./progress";
 
 function calculateRecipeProgress(
   progress,
@@ -29,6 +29,18 @@ function calculateRecipeProgress(
     itemProgress: progress,
     progress: progress + (1 - progress) * requiredItemProgress.progress
   };
+}
+
+function processResourceItem(resourceItem, resourceCollection, key) {
+  let result = allocateResourceItem(resourceItem, resourceCollection, key);
+
+  if (result.required) {
+    result.progress = result.owned / result.required;
+  } else {
+    result.progress = 0;
+  }
+
+  return result;
 }
 
 function processInventoryItem(inventoryItem, availableResources, achievements) {

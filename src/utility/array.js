@@ -8,7 +8,7 @@ function except(arr, exclude) {
 
 function flatten(arr) {
   return arr.reduce(
-    (sum, local) => (local.length ? [...sum, ...local] : [...sum, local]),
+    (sum, local) => (local instanceof Array ? [...sum, ...local] : [...sum, local]),
     []
   );
 }
