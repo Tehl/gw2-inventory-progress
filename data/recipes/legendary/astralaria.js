@@ -18,6 +18,7 @@ export default [
       { itemId: 76619, count: 1 }, // The Art of Woodworking: Axe Haft Edition Vol. 2
       { itemId: 71520, count: 1 }, // Honed Axe Blade
       { itemId: 74901, count: 1 }, // Weighted Axe Haft
+      { itemId: 75565, count: 1 }, // Desert Magics: Axe Edition Vol. 2
       { itemId: 73016, count: 1 }, // Jungle Magics: Axe Edition Vol. 2
       { itemId: 73488, count: 1 }, // Old World Magics: Axe Edition Vol. 2
       { itemId: 72373, count: 1 }, // Ancient Water Magics: Axe Edition Vol. 2
@@ -32,6 +33,14 @@ export default [
     achievementBitFlag: 5,
     components: [
       { itemId: 76963, count: 250 } // Basic Mithril Axe
+    ]
+  },
+  {
+    itemId: 75565, // Desert Magics: Axe Edition Vol. 2
+    achievementId: 2447,
+    achievementBitFlag: 6,
+    components: [
+      { currencyId: 27, count: 1000 } // Bandit Crest
     ]
   },
   {
