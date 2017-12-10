@@ -10,6 +10,7 @@ RecipeBuilder.prototype._parseEntry = function parseEntry(recipe) {
   let componentIds = [];
   let dbEntry = {
     itemId: recipe.output_item_id,
+    count: recipe.output_item_count,
     components: recipe.ingredients.map(ingredient => {
       let itemId = ingredient.item_id;
       let result = {

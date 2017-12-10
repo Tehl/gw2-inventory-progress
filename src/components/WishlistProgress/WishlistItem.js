@@ -1,11 +1,21 @@
 import React from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
+import { formatPrice } from "../../utility/display";
 
 function formatProgressText(item) {
   if (item.required === undefined) {
     return null;
   }
-  return item.owned + " / " + item.required;
+
+  let owned = item.owned;
+  let required = item.required;
+  
+  if (item.currencyId === 1) {
+    owned = formatPrice(owned, true);
+    required = formatPrice(required, true);
+  }
+
+  return owned + " / " + required;
 }
 
 function formatProgressPercent(progress) {
@@ -41,17 +51,12 @@ const ItemName = ({ item, gameData }) => {
     }
   }
 
-  return (
-    <div className={className}>
-      {name}
-    </div>
-  );
+  return <div className={className}>{name}</div>;
 };
 
-const ProgressSummary = ({ item }) =>
-  <div className="progress-summary">
-    {formatProgressPercent(item.progress)}
-  </div>;
+const ProgressSummary = ({ item }) => (
+  <div className="progress-summary">{formatProgressPercent(item.progress)}</div>
+);
 
 const ItemComponents = ({ item, gameData }) => {
   if (!item.components) {
@@ -60,9 +65,9 @@ const ItemComponents = ({ item, gameData }) => {
 
   return (
     <div className="item-components">
-      {item.components.map((inner, idx) =>
+      {item.components.map((inner, idx) => (
         <WishlistItem key={idx} item={inner} gameData={gameData} />
-      )}
+      ))}
     </div>
   );
 };
