@@ -3,12 +3,18 @@ import { getOrAdd } from "../utility/dictionary";
 
 function getCharacterContents(characters, dataService) {
   return characters.map(characterId =>
-    dataService.getInventory(characterId).then(inventory =>
-      inventory.bags.filter(bag => !!bag).map(bag => ({
+    Promise.all([
+      dataService.getEquipment(characterId).then(res => ({
         source: characterId,
-        items: bag.inventory
-      }))
-    )
+        items: res.equipment.map(o => ({ id: o.id, count: 1 }))
+      })),
+      dataService.getInventory(characterId).then(inventory =>
+        inventory.bags.filter(bag => !!bag).map(bag => ({
+          source: characterId,
+          items: bag.inventory
+        }))
+      )
+    ]).then(res => [res[0], ...res[1]])
   );
 }
 

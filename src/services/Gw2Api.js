@@ -77,6 +77,13 @@ Gw2Api.prototype.getCharacters = function getCharacters() {
   return this._apiFetch("/characters", true);
 };
 
+Gw2Api.prototype.getEquipment = function getEquipment(characterId) {
+  return this._apiFetch(
+    "/characters/" + encodeURIComponent(characterId) + "/equipment",
+    true
+  );
+};
+
 Gw2Api.prototype.getInventory = function getInventory(characterId) {
   return this._apiFetch(
     "/characters/" + encodeURIComponent(characterId) + "/inventory",
